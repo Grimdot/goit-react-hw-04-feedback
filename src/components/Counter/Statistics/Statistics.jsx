@@ -6,6 +6,11 @@ const Statistics = ({ good, neutral, bad, total, percentage }) => {
     <ul>
       <li>
         <p>
+          Good:<span className={css.statsValue}>{good}</span>
+        </p>
+      </li>
+      <li>
+        <p>
           Neutral:<span className={css.statsValue}>{neutral}</span>
         </p>
       </li>
