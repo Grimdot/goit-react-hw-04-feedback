@@ -22,13 +22,10 @@ export default class App extends Component {
 
   countTotalFeedback = () => {
     const feedbackStats = Object.values(this.state);
-    let totalFeedback = 0;
 
-    for (const stat of feedbackStats) {
-      totalFeedback += stat;
-    }
-
-    return totalFeedback;
+    return feedbackStats.reduce((totalFeedback, feedbackValue) => {
+      return (totalFeedback += feedbackValue);
+    }, 0);
   };
 
   countPositiveFeedbackPercentage = () => {
