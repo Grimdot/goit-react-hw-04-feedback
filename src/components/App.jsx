@@ -6,40 +6,33 @@ import Section from './Counter/Section/Section';
 import css from './App.module.css';
 
 const App = () => {
-  const [good, setGood] = useState(0);
-  const [neutral, setNeutral] = useState(0);
-  const [bad, setBad] = useState(0);
+  const [votes, setVotes] = useState({
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  });
 
-  const options = ['good', 'neutral', 'bad'];
+  const options = Object.keys(votes);
 
-  const onBtnsClick = stat => {
-    switch (stat) {
-      case 'good':
-        setGood(prevState => {
-          return prevState + 1;
-        });
-        break;
-      case 'neutral':
-        setNeutral(prevState => {
-          return prevState + 1;
-        });
-        break;
-      case 'bad':
-        setBad(prevState => {
-          return prevState + 1;
-        });
-        break;
-      default:
-        return;
-    }
+  const onBtnsClick = voteType => {
+    setVotes(prevState => {
+      return {
+        ...prevState,
+        [voteType]: prevState[voteType] + 1,
+      };
+    });
   };
 
   const countTotalFeedback = () => {
-    return good + neutral + bad;
+    const totalFeedback = Object.values(votes).reduce(
+      (acc, vote) => acc + vote,
+      0
+    );
+    return totalFeedback;
   };
 
   const countPositiveFeedbackPercentage = () => {
-    return Math.floor((good / countTotalFeedback()) * 100);
+    return Math.floor((votes.good / countTotalFeedback()) * 100);
   };
 
   return (
@@ -51,9 +44,9 @@ const App = () => {
       <Section title="Statistics">
         {countTotalFeedback() ? (
           <Statistics
-            good={good}
-            neutral={neutral}
-            bad={bad}
+            good={votes.good}
+            neutral={votes.neutral}
+            bad={votes.bad}
             total={countTotalFeedback()}
             percentage={countPositiveFeedbackPercentage()}
           />
